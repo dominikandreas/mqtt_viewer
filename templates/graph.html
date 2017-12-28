@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %} {{ name }} {% endblock title %}
+
+{% block body %}
+
+<div id="buttons" >Resolution:
+    {% for entry in ['Seconds', 'Minutes', 'Hours', 'Days'] %}
+    <a href="?name={{ name }}&resolution={{ entry | lower }}" >{{ entry }}</a>
+    {% endfor %}
+</div>
+
+<div id='container' style='width:95vw; height:95vh'>  </div>
+
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+
+<script >window.graph_name = "{{ name }}"</script>
+<script src="app.js"></script>
+
+{% endblock body %}

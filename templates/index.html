@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block title %} Login {% endblock title %}
+
+{% block body %}
+
+<h1> Graphs: </h1>
+{% for name, graphdef in graphs.items() -%}
+    <a href="/graph?name={{ name }}"><h2>{{ name }}</h2></a> <br>
+{% endfor %}
+
+{% endblock body %}

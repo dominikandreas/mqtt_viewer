@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title -%} Welcome {%- endblock title %}</title>
+  <link rel="stylesheet" href="base.css" />
+</head>
+<div id=body>
+    {% with flashes = get_flashed_messages() %}
+    {% if flashes %}
+    <div class=flashes>
+        <ul>
+            {% for f in flashes %}
+            <li>{{ f }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    {% block body %}
+    {% endblock body %}
+</div>
+
+
+<div id=nav>
+    <a href="{{ url_for('index') }}">Index</a> |
+    {% if g.logged_in -%}
+    <a href="{{ url_for('logout') }}">Logout</a>
+    {% else -%}
+    <a href="{{ url_for('login') }}">Login</a>
+    {% endif %}
+</div>
+
