@@ -19,6 +19,10 @@ Optional json_templates are used with jinja2 to extract values from json encoded
 Logs of different time resolutions (seconds, minutes, hours, days) are automatically created
 and corresponding graphs in the frontend are updated in real time.
 
+Here's what it could look like:
+![graph](https://github.com/dominikandreas/mqtt_viewer/blob/master/graph.png?raw=true)
+(ignore the lacking realism in the details of this graph for now)
+
 Everything is kept very simple and low level. Not a lot of 
 features, not a lot of code, not a lot of libraries.
 Should be relatively easy to extend for more features, 
