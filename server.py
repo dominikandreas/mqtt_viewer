@@ -24,13 +24,14 @@ def get_settings(path=SETTINGS_PATH):
             server = input("Enter a server address to connect to\n")
             port = int(input("Enter a corresponding port [1883]\n") or 1883)
             topics = input("Enter a topics to subscribe to (comma separated)\n")
-            username = input("Enter a username for login")
-            password = input("Enter a password (careful, stored as clear text)")
-            topics = [{name: {"name": name, "json_keys": []}} for name in [t.strip() for t in topics.split(",")]]
-            yaml.dump(dict(mqtt_settings=dict(server=server, port=port, topics=topics),
+            username = input("Enter a username for login\n")
+            password = input("Enter a password (careful, stored as clear text)\n")
+            topics = [t.strip() for t in topics.split(",")]
+            yaml.dump(dict(mqtt_settings=dict(server=server, port=port),
+                           graphs=dict(graph={topic: {'topic': topic} for topic in topics}),
                            web_settings=dict(host="0.0.0.0", port=3000, username=username, password=password)),
                       f, allow_unicode=True, default_flow_style=False)
-            print("Settings file created. Open %s to edit further details to your preference")
+            print("Settings file created. Open %s to edit further details to your preference" % path)
         return get_settings(path)
 
 
@@ -70,7 +71,7 @@ def setup_greeting(app, graphs):
         return redirect(url_for('index'))
 
 
-def setup(app, socketio, mqtt_settings, graphs):
+def setup(app, socketio, mqtt_settings, graphs, **kwargs):
     setup_greeting(app, graphs)
 
     @app.route('/graph')
@@ -130,7 +131,7 @@ if __name__ == '__main__':
     app.config['ADMIN_PASSWORD'] = settings["web_settings"]["password"]
 
     socketio = SocketIO(app, async_mode='gevent', logger=True, engineio_logger=True)
-    setup(app, socketio, **settings["mqtt_settings"])
+    setup(app, socketio, **settings)
 
     socketio.run(app, settings["web_settings"]["host"],
                  port=settings["web_settings"]["port"], debug=True, use_reloader=False)
