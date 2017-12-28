@@ -37,6 +37,7 @@ prettier looks, different layouts, etc..
 git clone git@github.com:dominikandreas/mqtt_viewer.git
 python3 -m pip install -r requirements.txt 
 ```
+> note: for windows users it's usually just ``python`` not ``python3``, but make sure you've got the correct version
 
 ## Starting
 - execute ``python3 server.py``
