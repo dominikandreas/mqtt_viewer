@@ -4,20 +4,25 @@
 
 {% block body %}
 
+<section class="wrapper">
   <h2>Login</h2>
 
   <form action="{{ url_for('login') }}" method=POST>
 
-  <dl>
-  <dt>Username
-      <dd><input type=text name=username>
+      <label class="textfield">
+          <input type=text name=username>
+          <span class="textfield__label">Username</span>
+      </label>
 
-  <dt>Password
-      <dd><input type=password name=password>
-  </dl>
-
-  <p><input type=submit value=Login>
+      <label class="textfield">
+          <input type=password name=password>
+          <span class="textfield__label">Password</span>
+      </label>
+        <br/>
+      <p><input type=submit value=Login>
 
   </form>
 
+
+</section>
 {% endblock body %}

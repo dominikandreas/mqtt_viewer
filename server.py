@@ -43,21 +43,23 @@ def setup_greeting(app, graphs):
     @app.route('/login', methods=['GET', 'POST'])
     @handle_request()
     def login():
-        if session.get('logged_in'):
-            flash("You are already logged in")
-            return redirect(url_for('index'))
-        if request.method == 'POST':
-            username = request.form.get('username')
-            password = request.form.get('password')
-            if username == app.config['ADMIN_USERNAME'] and password == app.config['ADMIN_PASSWORD']:
-                session['logged_in'] = True
-                session['logged_in_user'] = username
+        with app.app_context():
+            if session.get('logged_in'):
                 g.logged_in = True
-                flash("Successfully logged in")
+                flash("You are already logged in")
                 return redirect(url_for('index'))
-            else:
-                flash("Those credentials were incorrect")
-        return render_template('login.html')
+            if request.method == 'POST':
+                username = request.form.get('username')
+                password = request.form.get('password')
+                if username == app.config['ADMIN_USERNAME'] and password == app.config['ADMIN_PASSWORD']:
+                    session['logged_in'] = True
+                    session['logged_in_user'] = username
+                    g.logged_in = True
+                    flash("Successfully logged in")
+                    return redirect(url_for('index'))
+                else:
+                    flash("Those credentials were incorrect")
+            return render_template('login.html')
 
     @app.route('/logout')
     @handle_request()
@@ -79,6 +81,11 @@ def setup(app, socketio, mqtt_settings, graphs, **kwargs):
     def graph():
         graph_name = request.args.get("name")
         return render_template("graph.html", name=graph_name, graph=graphs[graph_name])
+
+    @app.route('/graphs')
+    @handle_request(private=True)
+    def graphs_overview():
+        return render_template("graphs.html", graphs=graphs)
 
     server, port = mqtt_settings["server"], mqtt_settings["port"]
 

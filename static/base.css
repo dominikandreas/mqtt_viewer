@@ -1,62 +1,33 @@
-body {
-  background: #fff;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 15px;
-  line-height: 1.7;
-  margin: 0;
-  padding: 30px;
+/*Links*/
+a:link {
+  color: #ff9800;
 }
 
-a {
-  color: #4183c4;
-  text-decoration: none;
+a:visited,
+a:active {
+  color: #ffad33;
 }
 
-a:hover {
-  text-decoration: underline;
+a:hover,
+a:focus {
+  color: #cc7a00;
 }
 
-code {
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  font-family: "Bitstream Vera Sans Mono", Consolas, Courier, monospace;
-  font-size: 12px;
-  margin: 0 2px;
-  padding: 0 5px;
+/*Buttons*/
+.btn,
+input[type="submit"],
+input[type="button"] {
+  background-color: #ff9800;
 }
-
-h1, h2, h3, h4 {
-  font-weight: bold;
-  margin: 0 0 15px;
-  padding: 0;
+.btn:focus, .btn:hover,
+input[type="submit"]:focus,
+input[type="submit"]:hover,
+input[type="button"]:focus,
+input[type="button"]:hover {
+  background-color: #cc7a00;
 }
-
-h1 {
-  border-bottom: 1px solid #ddd;
-  font-size: 2.5em;
-  font-weight: bold;
-  margin: 0 0 15px;
-  padding: 0;
-}
-
-h2 {
-  border-bottom: 1px solid #eee;
-  font-size: 2em;
-}
-
-h3 {
-  font-size: 1.5em;
-}
-
-h4 {
-  font-size: 1.2em;
-}
-
-p, ul {
-  margin: 15px 0;
-}
-
-ul {
-  padding-left: 30px;
+.btn:active,
+input[type="submit"]:active,
+input[type="button"]:active {
+  background-color: #ff9800;
 }

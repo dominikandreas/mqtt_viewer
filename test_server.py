@@ -24,6 +24,11 @@ graphs:
     'Meat Temp':
       topic: test_topic
       json_template: '{{ meat_temp }}'
+      
+  Meat:
+    'Meat Temp':
+      topic: test_topic
+      json_template: '{{ meat_temp }}'
 """ % server
 
 
