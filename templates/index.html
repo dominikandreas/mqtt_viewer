@@ -24,13 +24,13 @@
 
 <section class="wrapper-large grid">
 {% for name in graphs %}
-    <div id='container_{{ name }}' onclick="window.location='/graph?name={{ name }}'">  </div>
+    <div id='container_{{ name.replace(" ","_") }}' onclick="window.location='/graph?name={{ name }}'">  </div>
 {% endfor %}
 </section>
 
 {% for name in graphs %}
     <script>
-    let graph_{{name}} = new LineGraph('container_{{ name }}', window.socket, '{{name}}')
+    let graph_{{ name.replace(" ", "_") }} = new LineGraph('container_{{ name.replace(" ","_") }}', window.socket, '{{name}}')
     </script>
 {% endfor %}
 
