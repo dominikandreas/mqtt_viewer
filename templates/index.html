@@ -1,12 +1,38 @@
 {% extends "layout.html" %}
 
-{% block title %} Login {% endblock title %}
+{% block title %} {{ name }} {% endblock title %}
 
 {% block body %}
 
-<h1> Graphs: </h1>
-{% for name, graphdef in graphs.items() -%}
-    <a href="/graph?name={{ name }}"><h2>{{ name }}</h2></a> <br>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+
+<script src="app.js"></script>
+<script src="graphs.js"></script>
+<script >
+    window.socket = io.connect('//' + document.domain + ':' + location.port);
+</script>
+
+
+<section class="ta-center">Resolution:
+    {% for entry in ['Seconds', 'Minutes', 'Hours', 'Days'] %}
+    <a href="?name={{ name }}&resolution={{ entry | lower }}" >{{ entry }}</a>
+    {% endfor %}
+</section>
+
+<section class="wrapper-large grid">
+{% for name in graphs %}
+    <div id='container_{{ name }}' onclick="window.location='/graph?name={{ name }}'">  </div>
 {% endfor %}
+</section>
+
+{% for name in graphs %}
+    <script>
+    let graph_{{name}} = new LineGraph('container_{{ name }}', window.socket, '{{name}}')
+    </script>
+{% endfor %}
+
 
 {% endblock body %}

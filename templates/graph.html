@@ -25,7 +25,7 @@
 
 
 <script >
-    window.socket = io.connect('http://' + document.domain + ':' + location.port);
+    window.socket = io.connect('//' + document.domain + ':' + location.port);
     graph = new LineGraph('container', socket, '{{name}}')
 </script>
 
