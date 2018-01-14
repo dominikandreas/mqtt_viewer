@@ -117,7 +117,11 @@ class MQTTLogger:
             client.subscribe(topic)
 
     def get_data_view(self, resolution="second"):
-        return [{"name": name, "data": data[resolution]} for name, data in self.histories.items()]
+        time_records = [[d[0] for d in entry[resolution]] for entry in self.histories.values()]
+        t_min = np.max([recs[0] for recs in time_records])
+
+        return [{"name": name, "data": [d for d in data[resolution] if d[0] >= t_min]}
+                for name, data in self.histories.items()]
 
 
 def gauss_filter(data, weights=(0.1, 0.2, 0.4, 0.2, 0.1)):
@@ -125,11 +129,11 @@ def gauss_filter(data, weights=(0.1, 0.2, 0.4, 0.2, 0.1)):
     return list(zip(x, np.convolve([*y[:5][::-1], *y, *y[-5:][::-1]], weights, "same").tolist()[5:-5]))
 
 
-def interpolate(data, start, end, resolution=None, count=100):
+def interpolate(data, start, end, resolution=None, count=100, kind='linear'):
     x, y = zip(*data)
     while len(x) < 4:
         x = [*x, x[-1]+1]
         y = [*y, y[-1]]
     new_x = np.linspace(start, end, count) if resolution is None else np.arange(start, end, resolution)
-    new_y = interp1d(x, y, kind='cubic', bounds_error=False, fill_value=(0, 0))(new_x)
+    new_y = interp1d(x, y, kind=kind, bounds_error=False, fill_value=(0, 0))(new_x)
     return list(zip(new_x, new_y))
