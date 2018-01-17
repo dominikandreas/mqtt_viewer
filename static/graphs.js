@@ -1,10 +1,11 @@
 class LineGraph{
-    constructor(container, socket, name){
+    constructor(container, socket, name, hide_legend){
         this.chart = Highcharts.chart(container, {
             title: { text: name },
             xAxis: { type: 'datetime' },
-            yAxis: { },
+            yAxis: { visible: !hide_legend},
             legend: {
+                enabled: !hide_legend,
                 layout: 'vertical',
                 align: 'right',
                 verticalAlign: 'middle'
@@ -12,6 +13,10 @@ class LineGraph{
 
             plotOptions: {  line: {  animation: false } },
             series: [],
+            credits: { enabled: false },
+            navigation: {
+                buttonOptions: { enabled: !hide_legend }
+            }
         });
         
         this.name = name;

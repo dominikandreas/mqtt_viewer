@@ -5,3 +5,4 @@ paho-mqtt
 scipy>=0.17
 pyyaml
 jinja2
+ruamel.yaml

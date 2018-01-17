@@ -22,15 +22,16 @@
     {% endfor %}
 </section>
 
-<section class="wrapper-large grid">
+
 {% for name in graphs %}
-    <div id='container_{{ name.replace(" ","_") }}' onclick="window.location='/graph?name={{ name }}'">  </div>
+{% if (loop.index-1) % 4 == 0 %} <section class="wrapper-large grid grid--medium fullWidth"> {% endif %}
+    <div id='container_{{ name.replace(" ","_") }}' class="column--light" onclick="window.location='/graph?name={{ name }}'">  </div>
+{% if (loop.index) % 4 == 0 %} </section> {% endif %}
 {% endfor %}
-</section>
 
 {% for name in graphs %}
     <script>
-    let graph_{{ name.replace(" ", "_") }} = new LineGraph('container_{{ name.replace(" ","_") }}', window.socket, '{{name}}')
+    let graph_{{ name.replace(" ", "_") }} = new LineGraph('container_{{ name.replace(" ","_") }}', window.socket, '{{name}}', /*hide_legend=*/true )
     </script>
 {% endfor %}
 

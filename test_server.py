@@ -1,6 +1,7 @@
 import os
 import sys
-import yaml
+from ruamel.yaml import YAML
+yaml = YAML()
 from flask import Flask
 from flask_socketio import SocketIO
 from server import SECRET_KEY, setup
@@ -26,6 +27,44 @@ graphs:
       json_template: '{{ meat_temp }}'
       
   Meat:
+    'Meat Temp':
+      topic: test_topic
+      json_template: '{{ meat_temp }}'
+      
+  Oven2:
+    'Oven Temp':
+      topic: test_topic
+      json_template: '{{ oven_temp }}'
+    'Meat Temp':
+      topic: test_topic
+      json_template: '{{ meat_temp }}'
+      
+  Meat2:
+    'Meat Temp':
+      topic: test_topic
+      json_template: '{{ meat_temp }}'
+  Oven3:
+    'Oven Temp':
+      topic: test_topic
+      json_template: '{{ oven_temp }}'
+    'Meat Temp':
+      topic: test_topic
+      json_template: '{{ meat_temp }}'
+      
+  Meat4:
+    'Meat Temp':
+      topic: test_topic
+      json_template: '{{ meat_temp }}'
+      
+  Oven4:
+    'Oven Temp':
+      topic: test_topic
+      json_template: '{{ oven_temp }}'
+    'Meat Temp':
+      topic: test_topic
+      json_template: '{{ meat_temp }}'
+      
+  Meat5:
     'Meat Temp':
       topic: test_topic
       json_template: '{{ meat_temp }}'

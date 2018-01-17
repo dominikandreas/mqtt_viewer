@@ -1,6 +1,6 @@
 import os
 import uuid
-import yaml
+from ruamel.yaml import YAML
 from flask import Flask, request, session, g, flash, url_for, render_template, redirect
 from flask_socketio import SocketIO, emit
 from request_handling import handle_request

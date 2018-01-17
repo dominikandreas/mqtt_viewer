@@ -31,3 +31,8 @@ input[type="submit"]:active,
 input[type="button"]:active {
   background-color: #ff9800;
 }
+
+.fullWidth {
+  width: 95%;
+  max-width: 95%;
+}
