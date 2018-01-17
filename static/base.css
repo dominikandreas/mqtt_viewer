@@ -36,3 +36,8 @@ input[type="button"]:active {
   width: 95%;
   max-width: 95%;
 }
+
+.single-graph{
+  width: 95%;
+  height: 85vh;
+}
