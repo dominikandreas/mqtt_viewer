@@ -34,7 +34,7 @@ prettier looks, different layouts, etc..
 
 ## Installation
 ```bash
-git clone git@github.com:dominikandreas/mqtt_viewer.git
+git clone https://github.com/dominikandreas/mqtt_viewer.git
 cd mqtt_viewer
 python3 -m pip install -r requirements.txt 
 ```
