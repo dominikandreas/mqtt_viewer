@@ -1,20 +1,24 @@
 # MQTT Viewer
 
-Simple App for MQTT data logging and visualization.
+Simple Server+WebApp for MQTT data logging and visualization of time series. Just install, configure graphs, start viewing your MQTT topics in less than 5 minutes.
 
-This allows you to define graphs to be displayed based 
-on MQTT topics. Here's a config example:
+Why this and not something like [Grafana](https://grafana.com/)? Grafana is huge. This is really small, simple and easy to set up.
+
+## Configuration
+
+Lets pretend you're cooking meat in the oven with two temperature sensors: One for the oven and one for the meat, both connected to a microcontroller sending the data to an MQTT topic ``oven_topic`` encoded in JSON, e.g. `` { 'oven_temp': 80.0, 'meat_temp':75.5} ``. To visualize this data in a graph, you could use the following:
 
 ```yaml
-graphs:
-  Oven:
-    'Oven Temp':
-      topic: test_topic
-      json_template: '{{ oven_temp }}'
+graphs: # Section for configuring multiple graphs
+  Oven: # Name of the graph
+    'Oven Temp': # Name of an element in the graph
+      topic: oven_topic
+      json_template: '{{ oven_temp }}' # json / jinja2 template to parse from recieved data
     'Meat Temp':
-      topic: test_topic
+      topic: oven_topic
       json_template: '{{ meat_temp }}'
 ```
+
 Optional json_templates are used with jinja2 to extract values from json encoded messages. 
 Logs of different time resolutions (seconds, minutes, hours, days) are automatically created
 and corresponding graphs in the frontend are updated in real time.
@@ -23,10 +27,7 @@ Here's what it could look like:
 ![graph](https://github.com/dominikandreas/mqtt_viewer/blob/master/graph.png?raw=true)
 (ignore the lacking realism in the details of this graph for now)
 
-Everything is kept very simple and low level. Not a lot of 
-features, not a lot of code, not a lot of libraries.
-Should be relatively easy to extend for more features, 
-prettier looks, different layouts, etc..
+Everything is kept very simple and low level. Not a lot of features, not a lot of code, not a lot of libraries. Should be relatively easy to extend for more features, prettier looks, different layouts, etc..
 
 ## Requirements
  - Python 3 (tested with 3.6)
