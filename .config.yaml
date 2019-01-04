@@ -1,0 +1,53 @@
+graphs:
+  'Thermostats':
+    'Living Room temp':
+      topic: 'fhem/livingroom/wallthermostat/MeasuredTemp'
+    'Study temp':
+      topic: 'fhem/study/thermostat/MeasuredTemp'
+    'Bedroom temp':
+      topic: 'fhem/bedroom/thermostat/MeasuredTemp'
+    'Living Room valve':
+        topic: 'fhem/livingroom/wallthermostat/ValvePosition'
+    'Bedroom valve':
+        topic: 'fhem/bedroom/thermostat/ValvePosition'
+    'Study valve':
+        topic: 'fhem/study/thermostat/ValvePosition'
+  
+  'Current Temperatures':
+    'Living Room':
+      topic: 'fhem/livingroom/wallthermostat/MeasuredTemp'
+    'Study':
+      topic: 'fhem/study/thermostat/MeasuredTemp'
+    'Bedroom':
+      topic: 'fhem/bedroom/thermostat/MeasuredTemp'
+
+  'Target Temperatures':
+    'Living Room':
+      topic: 'fhem/livingroom/wallthermostat/DesiredTemp'
+    'Study':
+      topic: 'fhem/study/thermostat/DesiredTemp'
+    'Bedroom':
+      topic: 'fhem/bedroom/thermostat/DesiredTemp'
+
+  'Valve Positions':
+    'Living Room':
+        topic: 'fhem/livingroom/wallthermostat/ValvePosition'
+    'Bedroom':
+        topic: 'fhem/bedroom/thermostat/ValvePosition'
+    'Study':
+        topic: 'fhem/study/thermostat/ValvePosition'
+
+  'Plants':
+    'Ginseng':
+       topic: 'sensor.ginseng_humidity'
+
+mqtt_settings:
+  port: 1883
+  server: localhost
+
+web_settings:
+  host: 0.0.0.0
+  password: '946137'
+  port: 3000
+  username: admin
+

@@ -38,8 +38,6 @@ class Database:
             if os.path.isfile(self.path):
                 with open(self.path, "rb") as f:
                     self.db = pickle.load(f)
-        else:
-            logging.warning("not saving")
 
     def save(self):
         if self.path is not None:
@@ -51,8 +49,6 @@ class Database:
                 os.rename(self.path+".tmp", self.path)
             except:
                 traceback.print_exc()
-        else:
-            logging.warning("not saving")
 
     def __exit__(self, exc_type, exc_value, tb):
         self.scheduler.shutdown()
