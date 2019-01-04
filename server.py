@@ -32,7 +32,10 @@ def get_settings(path=SETTINGS_PATH):
                            graphs=dict(graph={topic: {'topic': topic} for topic in topics}),
                            web_settings=dict(host="0.0.0.0", port=3000, username=username, password=password)),
                       file_handle)
-            print("Settings file created. Open %s to edit further details to your preference" % path)
+            print("*********************************************************************************")
+            print("Settings file created. Open %s to edit further details to your preference." % path)
+            print("If you'd like to store the data to disk, add a db_path: <filepath> to your config")
+            print("*********************************************************************************")
         return get_settings(path)
 
 
@@ -101,7 +104,7 @@ def setup(app, socketio, mqtt_settings, graphs, **kwargs):
                 socketio.emit("%s_view_update" % graph_name,
                               data=dict(data=data, name=name, resolution=view), broadcast=True)
 
-        db = Database(path=graph_name+".db")
+        db = Database(path=mqtt_settings.get("db_path"))
 
         mqtt_logger = MQTTLogger(server=server, port=port, graph_def=graph_def, db=db,
                                  on_view_update=view_update_event)
