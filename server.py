@@ -17,10 +17,10 @@ def unique_id():
 
 def get_settings(path=SETTINGS_PATH):
     if os.path.isfile(path):
-        with open(path, "r") as f:
-            return yaml.load(f)
+        with open(path, "r") as file_handle:
+            return yaml.load(file_handle)
     else:
-        with open(path, "w", encoding='utf8') as f:
+        with open(path, "w", encoding='utf8') as file_handle:
             print("Creating new settings at %s" % path)
             server = input("Enter a server address to connect to\n")
             port = int(input("Enter a corresponding port [1883]\n") or 1883)
@@ -31,7 +31,7 @@ def get_settings(path=SETTINGS_PATH):
             yaml.dump(dict(mqtt_settings=dict(server=server, port=port),
                            graphs=dict(graph={topic: {'topic': topic} for topic in topics}),
                            web_settings=dict(host="0.0.0.0", port=3000, username=username, password=password)),
-                      f, allow_unicode=True, default_flow_style=False)
+                      file_handle)
             print("Settings file created. Open %s to edit further details to your preference" % path)
         return get_settings(path)
 
