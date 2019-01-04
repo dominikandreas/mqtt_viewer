@@ -1,5 +1,5 @@
 from paho.mqtt.client import Client as MQTTClient
-import numpy as np
+#import numpy as np
 import json
 import time
 import os
@@ -123,6 +123,6 @@ class MQTTLogger:
                 for name, data in self.histories.items()]
 
 
-def gauss_filter(data, weights=(0.1, 0.2, 0.4, 0.2, 0.1)):
-    x, y = zip(*data)
-    return list(zip(x, np.convolve([*y[:5][::-1], *y, *y[-5:][::-1]], weights, "same").tolist()[5:-5]))
+#def gauss_filter(data, weights=(0.1, 0.2, 0.4, 0.2, 0.1)):
+#    x, y = zip(*data)
+#    return list(zip(x, np.convolve([*y[:5][::-1], *y, *y[-5:][::-1]], weights, "same").tolist()[5:-5]))
