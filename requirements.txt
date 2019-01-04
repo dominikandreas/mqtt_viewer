@@ -2,6 +2,7 @@ apscheduler
 flask
 flask-socketio
 gevent
+numpy
 paho-mqtt
 pyyaml
 jinja2

@@ -1,11 +1,12 @@
 from paho.mqtt.client import Client as MQTTClient
-#import numpy as np
+import numpy as np
 import json
 import time
 import os
 import traceback
 import pickle
 import jinja2
+import logging
 
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -33,19 +34,25 @@ class Database:
         return self.db.__setitem__(key, value)
 
     def load(self):
-        if os.path.isfile(self.path):
-            with open(self.path, "rb") as f:
-                self.db = pickle.load(f)
+        if self.path is not None:
+            if os.path.isfile(self.path):
+                with open(self.path, "rb") as f:
+                    self.db = pickle.load(f)
+        else:
+            logging.warning("not saving")
 
     def save(self):
-        try:
-            with open(self.path+".tmp", "wb") as f:
-                pickle.dump(self.db, f)
-            if os.path.isfile(self.path):
-                os.remove(self.path)
-            os.rename(self.path+".tmp", self.path)
-        except:
-            traceback.print_exc()
+        if self.path is not None:
+            try:
+                with open(self.path+".tmp", "wb") as f:
+                    pickle.dump(self.db, f)
+                if os.path.isfile(self.path):
+                    os.remove(self.path)
+                os.rename(self.path+".tmp", self.path)
+            except:
+                traceback.print_exc()
+        else:
+            logging.warning("not saving")
 
     def __exit__(self, exc_type, exc_value, tb):
         self.scheduler.shutdown()
