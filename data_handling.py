@@ -1,4 +1,4 @@
-from paho.mqtt.client import Client as MQTTClient
+from datetime import datetime
 import numpy as np
 import json
 import time
@@ -7,12 +7,17 @@ import traceback
 import pickle
 import jinja2
 import logging
+from paho.mqtt.client import Client as MQTTClient
+from apscheduler.schedulers.background import BackgroundScheduler
 
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
 DB_PATH = ROOT + "/data.db"
 AVAILABLE_APIS = []
-from apscheduler.schedulers.background import BackgroundScheduler
+
+ts = time.time()
+utc_offset = (datetime.fromtimestamp(ts) - datetime.utcfromtimestamp(ts)).seconds
+logging.info("utc_offset: ", utc_offset)
 
 
 class Database:
@@ -97,7 +102,7 @@ class MQTTLogger:
         for name, value in entries.items():
             history = self.histories.get(name, {})
             data = history.get("raw", [])
-            data.append([time.time()*1000, value])
+            data.append([(time.time()+utc_offset)*1000, value])
             history["raw"] = data[-self.history_size:]
             self.update_resolutions(name, history)
             self.histories[name] = history
