@@ -5,10 +5,8 @@ import json
 from flask import flash, Response, request, session, g, redirect, url_for
 
 
-
 def make_response(data: list):
-    return Response(json.dumps(data), mimetype='application/json', headers={'Cache-Control': 'no-cache',
-                                                                            'Access-Control-Allow-Origin': '*'})
+    return Response(json.dumps(data), mimetype='application/json', headers={})
 
 
 def enforce_login(func):
