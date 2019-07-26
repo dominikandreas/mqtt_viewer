@@ -77,6 +77,14 @@ def setup_greeting(app, graphs):
         return redirect(url_for('index'))
 
 
+def view_update_event(name, view, data, graph_id):
+    room = "%s/%s" % (name, view)
+    print("event update for %s" % room)
+    with app.test_request_context():
+        socketio.emit("%s_view_update" % graph_id,
+                      data=dict(data=data, name=name, graph=graph_id, resolution=view), broadcast=True)
+
+
 def setup(app, socketio, mqtt_settings, graphs, **kwargs):
     setup_greeting(app, graphs)
 
@@ -96,18 +104,9 @@ def setup(app, socketio, mqtt_settings, graphs, **kwargs):
     data_loggers = {}
 
     for graph_name, graph_def in graphs.items():
-
-        def view_update_event(name, view, data):
-            room = "%s/%s" % (name, view)
-            print("event update for %s" % room)
-            with app.test_request_context():
-                socketio.emit("%s_view_update" % graph_name,
-                              data=dict(data=data, name=name, resolution=view), broadcast=True)
-
         db = Database(path=mqtt_settings.get("db_path"))
-
         mqtt_logger = MQTTLogger(server=server, port=port, graph_def=graph_def, db=db,
-                                 on_view_update=view_update_event)
+                                 on_view_update=view_update_event, id=graph_name)
         data_loggers[graph_name] = mqtt_logger
 
     @app.route('/data', methods=['GET'])
