@@ -46,11 +46,10 @@ class Database:
     def save(self):
         if self.path is not None:
             try:
-                with open(self.path + ".tmp", "wb") as f:
-                    pickle.dump(self.db, f)
                 if os.path.isfile(self.path):
-                    os.remove(self.path)
-                os.rename(self.path + ".tmp", self.path)
+                    os.rename(self.path, self.path+".bak")
+                with open(self.path, "wb") as f:
+                    pickle.dump(self.db, f)
             except:
                 traceback.print_exc()
 
@@ -69,7 +68,7 @@ mqtt_success_codes = {
 
 
 class MQTTLogger:
-    def __init__(self, server, graph_def, db, port=1883, history_size=3600, on_view_update=None, id=None):
+    def __init__(self, server, graph_def, db, port=1883, history_size=600, on_view_update=None, id=None):
         self.db = db
         self.db["histories"] = self.db.get("histories", {})
         self.history_size = history_size
