@@ -25,48 +25,6 @@ graphs:
       topic: "__TOPIC__"
       json_template: '{{ meat_temp }}'
       
-  Meat:
-    'Meat Temp':
-      topic: "__TOPIC__"
-      json_template: '{{ meat_temp }}'
-      
-  Oven2:
-    'Oven Temp':
-      topic: "__TOPIC__"
-      json_template: '{{ oven_temp }}'
-    'Meat Temp':
-      topic: "__TOPIC__"
-      json_template: '{{ meat_temp }}'
-      
-  Meat2:
-    'Meat Temp':
-      topic: "__TOPIC__"
-      json_template: '{{ meat_temp }}'
-  Oven3:
-    'Oven Temp':
-      topic: "__TOPIC__"
-      json_template: '{{ oven_temp }}'
-    'Meat Temp':
-      topic: "__TOPIC__"
-      json_template: '{{ meat_temp }}'
-      
-  Meat4:
-    'Meat Temp':
-      topic: "__TOPIC__"
-      json_template: '{{ meat_temp }}'
-      
-  Oven4:
-    'Oven Temp':
-      topic: "__TOPIC__"
-      json_template: '{{ oven_temp }}'
-    'Meat Temp':
-      topic: "__TOPIC__"
-      json_template: '{{ meat_temp }}'
-      
-  Meat5:
-    'Meat Temp':
-      topic: "__TOPIC__"
-      json_template: '{{ meat_temp }}'
 """ % server).replace("__TOPIC__", topic)
 
 
