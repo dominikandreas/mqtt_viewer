@@ -11,6 +11,15 @@ ROOT = os.path.abspath(os.path.dirname(__file__))
 SETTINGS_PATH = ROOT + "/config.yaml"
 
 
+app = socketio = None
+
+
+def set_globals(_app, _socketio):
+    global app
+    global socketio
+    app, socketio = _app, _socketio
+
+
 def unique_id():
     return hex(uuid.uuid4().time)[2:-1]
 
@@ -86,6 +95,7 @@ def view_update_event(name, view, data, graph_id):
 
 
 def setup(app, socketio, mqtt_settings, graphs, **kwargs):
+    set_globals(app, socketio)
     setup_greeting(app, graphs)
 
     @app.route('/graph')

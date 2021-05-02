@@ -1,10 +1,11 @@
 import os
-import yaml
-ROOT = os.path.abspath(os.path.dirname(__file__))
-from paho.mqtt.client import Client as MQTTClient
-import numpy as np
 import time
-from test_server import test_settings, server
+import numpy as np
+from ruamel import yaml
+from paho.mqtt.client import Client as MQTTClient
+from test_server import test_settings, server, topic
+
+ROOT = os.path.abspath(os.path.dirname(__file__))
 
 
 def run_client(settings):
@@ -26,9 +27,9 @@ def run_client(settings):
         f = lambda x: np.log(x/10)*10+50
         data = '{"meat_temp": %.1f, "oven_temp": %.1f}' % (f(td), f(td+100))
         print("publishing data")
-        client.publish("test_topic", data)
+        client.publish(topic, data)
 
 
 if __name__ == "__main__":
-    settings = yaml.load(test_settings)
+    settings = yaml.load(test_settings, Loader=yaml.Loader)
     run_client(settings)

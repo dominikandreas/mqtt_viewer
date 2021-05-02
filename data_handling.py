@@ -142,7 +142,7 @@ class MQTTLogger:
 
     def get_data_view(self, resolution="second"):
         time_records = [[d[0] for d in entry[resolution]] for entry in self.histories.values()]
-        t_min = np.max([recs[0] for recs in time_records])
+        t_min = np.max([recs[0] for recs in time_records]) if time_records else 0
 
         return [{"name": name, "data": [d for d in data[resolution] if d[0] >= t_min]}
                 for name, data in self.histories.items()]

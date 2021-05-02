@@ -4,14 +4,13 @@ from ruamel.yaml import YAML
 yaml = YAML()
 from flask import Flask
 from flask_socketio import SocketIO
-from server import SECRET_KEY, setup
+from server import SECRET_KEY, setup, set_globals
 ROOT = os.path.abspath(os.path.dirname(__file__))
 
 
-assert len(sys.argv) > 1
-server = sys.argv[-1]
-
-test_settings = """
+server = sys.argv[-1] if len(sys.argv) > 1 else "broker.hivemq.com"
+topic = "mqtt_viewer_test"
+test_settings = ("""
 mqtt_settings:
   port: 1883
   server: %s
@@ -20,55 +19,55 @@ mqtt_settings:
 graphs:
   Oven:
     'Oven Temp':
-      topic: test_topic
+      topic: "__TOPIC__"
       json_template: '{{ oven_temp }}'
     'Meat Temp':
-      topic: test_topic
+      topic: "__TOPIC__"
       json_template: '{{ meat_temp }}'
       
   Meat:
     'Meat Temp':
-      topic: test_topic
+      topic: "__TOPIC__"
       json_template: '{{ meat_temp }}'
       
   Oven2:
     'Oven Temp':
-      topic: test_topic
+      topic: "__TOPIC__"
       json_template: '{{ oven_temp }}'
     'Meat Temp':
-      topic: test_topic
+      topic: "__TOPIC__"
       json_template: '{{ meat_temp }}'
       
   Meat2:
     'Meat Temp':
-      topic: test_topic
+      topic: "__TOPIC__"
       json_template: '{{ meat_temp }}'
   Oven3:
     'Oven Temp':
-      topic: test_topic
+      topic: "__TOPIC__"
       json_template: '{{ oven_temp }}'
     'Meat Temp':
-      topic: test_topic
+      topic: "__TOPIC__"
       json_template: '{{ meat_temp }}'
       
   Meat4:
     'Meat Temp':
-      topic: test_topic
+      topic: "__TOPIC__"
       json_template: '{{ meat_temp }}'
       
   Oven4:
     'Oven Temp':
-      topic: test_topic
+      topic: "__TOPIC__"
       json_template: '{{ oven_temp }}'
     'Meat Temp':
-      topic: test_topic
+      topic: "__TOPIC__"
       json_template: '{{ meat_temp }}'
       
   Meat5:
     'Meat Temp':
-      topic: test_topic
+      topic: "__TOPIC__"
       json_template: '{{ meat_temp }}'
-""" % server
+""" % server).replace("__TOPIC__", topic)
 
 
 if __name__ == '__main__':
