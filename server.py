@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import os
 import uuid
 from ruamel.yaml import YAML
@@ -51,7 +52,7 @@ def get_settings(path=SETTINGS_PATH):
 def setup_greeting(app, graphs):
     @app.route('/')
     def index():
-        return render_template('index.html' if session.get('logged_in') else 'login.html', graphs=graphs)
+        return render_template('index.html' if (session.get('logged_in') or (not app.config['ADMIN_PASSWORD'])) else 'login.html', graphs=graphs)
 
     @app.route('/login', methods=['GET', 'POST'])
     @handle_request()
@@ -99,13 +100,13 @@ def setup(app, socketio, mqtt_settings, graphs, **kwargs):
     setup_greeting(app, graphs)
 
     @app.route('/graph')
-    @handle_request(private=True)
+    @handle_request(private=True if app.config['ADMIN_PASSWORD'] else False)
     def graph():
         graph_name = request.args.get("name")
         return render_template("graph.html", name=graph_name, graph=graphs[graph_name])
 
     @app.route('/graphs')
-    @handle_request(private=True)
+    @handle_request(private=True if app.config['ADMIN_PASSWORD'] else False)
     def graphs_overview():
         return render_template("graphs.html", graphs=graphs)
 
@@ -114,13 +115,16 @@ def setup(app, socketio, mqtt_settings, graphs, **kwargs):
     data_loggers = {}
 
     for graph_name, graph_def in graphs.items():
-        db = Database(path=mqtt_settings.get("db_path"))
+
+        db_path_parts = mqtt_settings.get("db_path").split(".")
+        db_path = ".".join(db_path_parts[:-1]) + graph_name.replace(" ","_").lower() + "." + db_path_parts[-1]
+        db = Database(path=db_path)
         mqtt_logger = MQTTLogger(server=server, port=port, graph_def=graph_def, db=db,
                                  on_view_update=view_update_event, id=graph_name)
         data_loggers[graph_name] = mqtt_logger
 
     @app.route('/data', methods=['GET'])
-    @handle_request(format_response=True, private=True)
+    @handle_request(format_response=True, private=True if app.config['ADMIN_PASSWORD'] else False)
     def data():
         name = request.args.get("graph_name")
         res = request.args.get("resolution", None)
